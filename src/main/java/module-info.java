@@ -2,12 +2,16 @@ module app.simulator {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql; //mysql
-    requires de.jensd.fx.glyphs.fontawesome; // fontawesome
+    requires de.jensd.fx.glyphs.fontawesome;
+    requires java.desktop; // fontawesome
 
-    opens app.simulator to javafx.fxml;
+
+    opens app.simulator.controllers to javafx.fxml;
+
     exports app.simulator;
-    exports app.simulator.Models;
-    exports app.simulator.Controllers;
-    exports app.simulator.Views;
-    exports app.simulator.DB;
+    exports app.simulator.controllers;
+    exports app.simulator.database;
+    exports app.simulator.models;
+    exports app.simulator.types;
+    exports app.simulator.views;
 }

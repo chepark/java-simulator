@@ -1,4 +1,4 @@
-package app.simulator.DB;
+package app.simulator.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
