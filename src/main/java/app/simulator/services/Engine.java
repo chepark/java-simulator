@@ -10,85 +10,112 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Engine {
-    private final LinkedList<ServicePoint> servicePoints = new LinkedList<>();
     private final ServicePointType[] servicePointTypes = ServicePointType.values();
-    private int numberOfCustomers;
+    protected EventList eventList;
+    protected EventList copiedEventList;
+    /***
+     *
+     */
+    private ServicePoint[] servicePoints;
 
-    public Engine(int numberOfCustomers) {
-        this.numberOfCustomers = numberOfCustomers;
-    }
+    public Engine() {
+        eventList = new EventList<Event>();
+        servicePoints = new ServicePoint[6];
 
-    private boolean simulationOn () {
-        if (servicePoints.get(5).getHandledCustomers() == numberOfCustomers)
-            return false;
-        else
-            return true;
+        servicePoints[0] = new ServicePoint(ServicePointType.QUEUE1, eventList); // Queue1
+        servicePoints[1] = new ServicePoint(ServicePointType.PANTTI, eventList); // Pantti
+        servicePoints[2] = new ServicePoint(ServicePointType.MARKET, eventList); // Market
+        servicePoints[3] = new ServicePoint(ServicePointType.QUEUE2, eventList); // Queue2
+        servicePoints[4] = new ServicePoint(ServicePointType.SELF_CHECKOUT, eventList); // SelfCheckout
+        servicePoints[5] = new ServicePoint(ServicePointType.CASHIER, eventList);  // Cashier
     }
 
     public void run () {
         initialize();
-        runService();
+        prepareEvents();
+        System.out.println("OUTT");
+        System.out.println("copied" + copiedEventList.toString());
     }
 
     protected void initialize() {
-        // initialize the simulator
-        // 1. set the list of service points
+        // create arrival event
         for (int i = 0; i < 6; i++) {
-            servicePoints.add(new ServicePoint(servicePointTypes[i]));
-        }
-
-        // 2. create customers
-        int numberOfCustomers = 3; // TODO: get the data from input
-        for (int i = 0; i < numberOfCustomers; i++) {
-            Customer c = new Customer();
-            new Arrival(c, servicePoints);
+            Event arrivalEvent = Arrival.generateNextArrival();
+            eventList.addEvent(arrivalEvent);
         }
     }
 
-    protected void runService() {
-        while (simulationOn()) {
-         for(int i = 0; i < servicePoints.size(); i++) {
-             ServicePoint sp = servicePoints.get(i);
-             Customer c = sp.removeFromQueue(); // !!! There could be no customer in the queue
-             double time = c.getExperiences().getRecentEvent().getTime();
+    protected void prepareEvents() {
+        Customer c;
+        double t; // time
+        copiedEventList = new EventList<>();
 
-             ServicePoint nextSp;
-
-             if (sp.getType() == ServicePointType.QUEUE1) {
-               nextSp = servicePoints.get(i+1);
-               // If Pantti has no queue.
-                if (nextSp.getQueue().size() == 0) {
-                     // define the removal time randomly
-                     time = time + RandomTime.generate(ServicePointType.QUEUE1);
-                     // set the removal event
-                     Event awayEvent = new Event(EventType.AWAY, time, ServicePointType.QUEUE1);
-                     c.setExperiences(awayEvent);
-                     // set the arrival event for the next service point
-                    Event arrivalEvent = new Event(EventType.ARRIVAL, time, ServicePointType.PANTTI);
-                    c.setExperiences(arrivalEvent);
-                    // add the customer to the next queue
-                    nextSp.addToQueue(c);
+        while (true) {
+            Event eventToProcess = eventList.remove(); // first event in the eventList
+            if (eventToProcess == null) {
+                return;
+            }
+            copiedEventList.addEvent(eventToProcess);
+            t = eventToProcess.getTime();
+            switch (eventToProcess.getServicePoint()) {
+            case ServicePointType.ARRIVAL:
+                if (eventToProcess.hasPantti()) {
+                    servicePoints[0].addToQueue(new Customer());
+                    eventList.addEvent(new Event(t, ServicePointType.QUEUE1));
+                } else {
+                    servicePoints[3].addToQueue(new Customer());
+                    eventList.addEvent(new Event(t, ServicePointType.MARKET));
                 }
-             } else if (sp.getType() == ServicePointType.PANTTI) {
-                  time = time + RandomTime.generate(ServicePointType.PANTTI);
-                    Event awayEvent = new Event(EventType.AWAY, time, ServicePointType.PANTTI);
-                    c.setExperiences(awayEvent);
+                break;
+            case ServicePointType.QUEUE1:
+                t = t + RandomTime.generate(ServicePointType.QUEUE1);
+                if (servicePoints[1].isIdle()) {
+                    c = servicePoints[0].removeFromQueue();
+                    servicePoints[1].addToQueue(c);
+                    eventList.addEvent(new Event(t, ServicePointType.PANTTI));
+                }
+                break;
+            case ServicePointType.PANTTI:
+                c = servicePoints[1].removeFromQueue();
+                servicePoints[1].setIdle(true);
+                servicePoints[2].addToQueue(c);
+                t = t + RandomTime.generateShoppingTime();
+                eventList.addEvent(new Event(t, ServicePointType.MARKET));
+                break;
+            case ServicePointType.MARKET:
+                if (servicePoints[3].isIdle() || servicePoints[2].getQueue().size() < 6) {
+                    c = servicePoints[2].removeFromQueue();
+                    servicePoints[3].addToQueue(c);
+                    t = t + RandomTime.generate(ServicePointType.QUEUE2);
+                    eventList.addEvent(new Event(t, ServicePointType.QUEUE2));
+                }
+                break;
+            case ServicePointType.QUEUE2:
+                if (servicePoints[4].isIdle()) {
+                    c = servicePoints[3].removeFromQueue();
+                    servicePoints[4].addToQueue(c);
+                    t = t + RandomTime.generate(ServicePointType.SELF_CHECKOUT);
+                    eventList.addEvent(new Event(t, ServicePointType.SELF_CHECKOUT));
+                } else if (servicePoints[5].isIdle()) {
+                    c = servicePoints[3].removeFromQueue();
+                    servicePoints[5].addToQueue(c);
+                    t = t + RandomTime.generate(ServicePointType.CASHIER);
+                    eventList.addEvent(new Event(t, ServicePointType.CASHIER));
+                }
+                break;
+            case ServicePointType.SELF_CHECKOUT:
+                c = servicePoints[4].removeFromQueue();
+                servicePoints[4].setIdle(true);
 
-                    Event arrivalEvent = new Event(EventType.ARRIVAL, time, ServicePointType.MARKET);
-                    c.setExperiences(arrivalEvent);
+                break;
+            case ServicePointType.CASHIER:
+                c = servicePoints[5].removeFromQueue();
+                servicePoints[5].setIdle(true);
 
-                    nextSp = servicePoints.get(i+1); // Market service point
-                    nextSp.addToQueue(c);
-             } else if (sp.getType() == ServicePointType.MARKET) {
-
-             } else if (sp.getType() == ServicePointType.QUEUE2) {
-
-             } else if (sp.getType() == ServicePointType.SELF_CHECKOUT || sp.getType() == ServicePointType.CASHIER){
-
-             }
-
-         }
+                break;
+            }
         }
+
     }
 }
 

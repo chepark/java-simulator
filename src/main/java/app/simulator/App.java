@@ -1,20 +1,15 @@
 package app.simulator;
 
 import app.simulator.database.DatabaseAccessor;
-import app.simulator.models.Arrival;
-import app.simulator.models.Customer;
-import app.simulator.models.ServicePoint;
 import app.simulator.services.Engine;
-import app.simulator.types.CustomerType;
-import app.simulator.types.ServicePointType;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
+
 
 /**
  * This application is created as a group assignment for Project Programming course in Metropolia UAS.
@@ -42,7 +37,7 @@ public class App extends Application {
         DatabaseAccessor db = new DatabaseAccessor();
         db.getConnection();
 
-        Engine simulatorEngine = new Engine(3);
+        Engine simulatorEngine = new Engine();
         simulatorEngine.run();
     }
 }
