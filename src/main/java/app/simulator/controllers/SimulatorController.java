@@ -1,24 +1,38 @@
 package app.simulator.controllers;
 
+import app.simulator.models.ServicePoint;
+import app.simulator.services.Engine;
+import app.simulator.util.timeUtil.RandomTime;
+import javafx.animation.AnimationTimer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class SimulatorController {
 
     // service point status
     @FXML
-    private ListView list_queue1;
+    private ListView<String> list_queue1;
     @FXML
-    private ListView list_pantti;
+    private ListView<String> list_pantti;
     @FXML
-    private ListView list_market;
+    private ListView<String> list_market;
     @FXML
-    private ListView list_queue2;
+    private ListView<String> list_queue2;
     @FXML
-    private ListView list_selfservice;
+    private ListView<String> list_selfservice;
     @FXML
-    private ListView list_cashier;
+    private ListView<String> list_cashier;
 
     // input
     @FXML
@@ -31,6 +45,8 @@ public class SimulatorController {
     private Button btn_play;
     @FXML
     private Button btn_stop;
+
+    private Thread simulatorEngine;
 
     /***
      * Display list of customer id waiting for returning pantti at Queue1.
@@ -77,31 +93,34 @@ public class SimulatorController {
 
 
     /***
-     * Get the input value and connect to model-> Customer
-     */
-    public void getNumOfCustomers() {
-        // set the number of customers in the customer model
-    }
-
-    /***
      * Get the value and connect it to models-> Clock
      */
-    public void changeSpeed() {
+    public void handleSliderRelease(MouseEvent e) {
         // change the speed of clock on the model
+        double speed = speed_slider.getValue();
+        RandomTime.setSpeed(speed);
     }
 
     /***
      * Stop the simulation.
      * @param e
      */
-    public void stopSimulation(ActionEvent e) {
-
+    public void handleStopClick(MouseEvent e) {
+        simulatorEngine.interrupt();
+        System.out.println("stop");
     }
 
     // play button
     public void playSimulation(ActionEvent e) {
         // get customers from model and start to display in table
+        int customers = Integer.parseInt(input_number.getText());
+        if (customers == 0 || input_number.getText().equals("")) {
+            System.out.println("Please enter the number of customers");
+            return;
+        }
+        RandomTime.setCustomerNumber(customers);
 
+        simulatorEngine = new Engine();
+        simulatorEngine.start();
     }
-
 }

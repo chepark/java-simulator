@@ -15,7 +15,7 @@ public class RandomTime {
     private static final double CASHIER_SERVICE_TIME = 4.0;
     private static final double AVG_SHOPPING_TIME = 20.0;
     private static double speed = 1.0;
-    private static double averageCustomers = 6.0; // TODO: Connect to the UI to change the value
+    private static double customerNumber = 6.0; // TODO: Connect to the UI to change the value
     private static double timeIntervalsInHours = 1.0; // 30 minutes = 0.5 hours
 
     public static double generateShoppingTime() {
@@ -29,7 +29,7 @@ public class RandomTime {
      * @return
      */
     public static double generateArrivalTimeGap() {
-        double lambda = averageCustomers / timeIntervalsInHours;
+        double lambda = customerNumber / timeIntervalsInHours;
         Poisson poisson = new Poisson(lambda);
         return (double) poisson.sample();
     }
@@ -44,14 +44,36 @@ public class RandomTime {
         };
 
         Normal normalGenerator = new Normal(meanValue, 1);
-       return normalGenerator.sample();
+        return normalGenerator.sample();
     }
 
-    public double getSpeed() {
+    public static double ser() {
+        return PANTTI_SERVICE_TIME;
+    }
+
+    public static int getCustomerNumber() {
+        return (int) customerNumber;
+    }
+
+    public static void setCustomerNumber(int i) {
+        customerNumber = (double) i;
+    }
+
+    public static double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public static void setSpeed(double speed) {
+        if (speed == 0) {
+            RandomTime.speed = 1.9;
+        } else if (speed == 0.5) {
+            RandomTime.speed = 1.5;
+        } else if (speed == 1.0) {
+            RandomTime.speed = 1;
+        } else if (speed == 1.5) {
+            RandomTime.speed = 0.5;
+        } else if (speed == 2.0) {
+            RandomTime.speed = 0.1;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package app.simulator;
 
+import app.simulator.controllers.SimulatorController;
 import app.simulator.database.DatabaseAccessor;
 import app.simulator.services.Engine;
 
@@ -30,14 +31,14 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/Fxml/Simulator.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 900, 400);
-        stage.setTitle("Simulator");
+        stage.setTitle("Supermarket simulator");
         stage.setScene(scene);
         stage.show();
 
         DatabaseAccessor db = new DatabaseAccessor();
         db.getConnection();
 
-        Engine simulatorEngine = new Engine();
-        simulatorEngine.run();
+        //Engine simulatorEngine = new Engine();
+        //simulatorEngine.run();
     }
 }
