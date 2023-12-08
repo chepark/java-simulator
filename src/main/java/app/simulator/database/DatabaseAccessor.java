@@ -5,9 +5,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseAccessor {
-    public Connection databaseLink;
+    public static Connection databaseLink;
 
-    public  Connection getConnection() {
+    public static void terminate() {
+        try {
+            getConnection().close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() {
         final String DB_NAME="simulator";
         final String DB_USER="root";
         final String DB_PASSWORD="root";
