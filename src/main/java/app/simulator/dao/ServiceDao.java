@@ -5,17 +5,24 @@ import app.simulator.entity.ServiceTime;
 import java.sql.*;
 import java.util.*;
 
+/***
+ * This class is used to access the database and retrieve the data from the database
+ */
 public class ServiceDao {
-
+    /***
+     * Get all services from the database
+     * @return list of all the services
+     */
     public List<ServiceTime> getAllServices() {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "SELECT id, service_name, total_customers, starting_time, ending_time, avg_service_time FROM service";
+        String sql = "SELECT id, service_name, total_customers, starting_time, ending_time, avg_service_time FROM service_time";
         List<ServiceTime> services = new ArrayList<ServiceTime>();
 
         try {
             Statement s = conn.createStatement();
             ResultSet rs = s.executeQuery(sql);
 
+            // turn into java readable format
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String service_name = rs.getString(2);
@@ -34,10 +41,14 @@ public class ServiceDao {
         return services;
     }
 
-
+    /***
+     * Get a service from the database based on the id
+     * @param id
+     * @return
+     */
     public ServiceTime getService(int id) {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "SELECT service_name, total_customers, starting_time, ending_time, avg_service_time FROM service WHERE id=?";
+        String sql = "SELECT service_name, total_customers, starting_time, ending_time, avg_service_time FROM service_time WHERE id=?";
 
         String service_name = null;
          int total_customer = 0;
@@ -53,6 +64,7 @@ public class ServiceDao {
 
             ResultSet rs = ps.executeQuery();
 
+            // turn into java readable format
             while (rs.next()) {
                 count++;
                 service_name = rs.getString(1);
@@ -73,9 +85,13 @@ public class ServiceDao {
         }
     }
 
+    /***
+     * Save a service in the database
+     * @param emp
+     */
     public void putService(ServiceTime emp) {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "INSERT INTO service (service_name, total_customers, starting_time, ending_time, avg_service_time) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO service_time (service_name, total_customers, starting_time, ending_time, avg_service_time) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, emp.getServiceName());
