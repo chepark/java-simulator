@@ -23,8 +23,7 @@
 
 <!--Input Container-->
 
-<TabPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="415.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21"
-         fx:controller="app.simulator.controllers.SimulatorController">
+<TabPane prefHeight="415.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.simulator.controllers.SimulatorController">
    <tabs>
       <Tab text="simulator">
          <content>
@@ -34,52 +33,51 @@
                        <children>
                            <GridPane prefHeight="208.0" prefWidth="960.0" styleClass="layout_grid" HBox.hgrow="ALWAYS">
                                <columnConstraints>
-                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                </columnConstraints>
                                <rowConstraints>
-                                   <RowConstraints/>
+                                   <RowConstraints />
                                </rowConstraints>
                                <children>
                                    <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Queue1"
-                                                 wrappingWidth="160.2880859375"/>
-                                           <ListView fx:id="list_queue1" prefHeight="200.0" prefWidth="161.0"/>
+                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Queue1" wrappingWidth="160.2880859375" />
+                                           <ListView fx:id="list_queue1" prefHeight="200.0" prefWidth="161.0" />
                                        </children>
                                    </VBox>
                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                        <children>
-                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pantti"/>
-                                           <ListView fx:id="list_pantti" prefHeight="200.0" prefWidth="200.0"/>
+                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pantti" />
+                                           <ListView fx:id="list_pantti" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                    </VBox>
                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                                        <children>
-                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Market"/>
-                                           <ListView fx:id="list_market" prefHeight="200.0" prefWidth="200.0"/>
+                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Market" />
+                                           <ListView fx:id="list_market" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                    </VBox>
                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
                                        <children>
-                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Queue2"/>
-                                           <ListView fx:id="list_queue2" prefHeight="200.0" prefWidth="200.0"/>
+                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Queue2" />
+                                           <ListView fx:id="list_queue2" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                    </VBox>
                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4">
                                        <children>
-                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Self-checkout"/>
-                                           <ListView fx:id="list_selfcheckout" prefHeight="200.0" prefWidth="200.0"/>
+                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Self-checkout" />
+                                           <ListView fx:id="list_selfcheckout" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                    </VBox>
                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5">
                                        <children>
-                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cashier"/>
-                                           <ListView fx:id="list_cashier" prefHeight="200.0" prefWidth="200.0"/>
+                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cashier" />
+                                           <ListView fx:id="list_cashier" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                    </VBox>
                                </children>
@@ -90,7 +88,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="190.0" spacing="10" styleClass="input_container" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label styleClass="input_label" text="Number of customers" HBox.hgrow="ALWAYS">
+                               <Label styleClass="input_label" text="# of customers in hour" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -104,9 +102,8 @@
                          <!--Button Bar-->
                         <ButtonBar prefHeight="38.0" prefWidth="565.0">
                           <buttons>
-                              <Slider fx:id="speed_slider" blockIncrement="0.5" majorTickUnit="0.5" max="2.0"
-                                      minorTickCount="0" prefHeight="38.0" prefWidth="266.0" showTickLabels="true"
-                                      showTickMarks="true" snapToTicks="true" value="1.0">
+                              <!--Slider-->
+                              <Slider fx:id="speed_slider" blockIncrement="0.5" majorTickUnit="0.5" max="2.0" minorTickCount="0" onMouseReleased="#handleSliderRelease" prefHeight="38.0" prefWidth="266.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -114,13 +111,14 @@
                                     <Insets top="10.0" />
                                  </padding>
                               </Slider>
-                              <Button id="btn__play" fx:id="btn_play" mnemonicParsing="false" onAction="#playSimulation"
-                                      styleClass="btn" text="Play">
+                              <!--Play Button-->
+                              <Button id="btn__play" fx:id="btn_play" mnemonicParsing="false" onAction="#playSimulation" styleClass="btn" text="Play">
                                  <graphic>
-                                    <FontAwesomeIconView glyphName="PLAY" />
+                                    <FontAwesomeIconView glyphName="PLAY" text="" />
                                  </graphic>
                               </Button>
-                              <Button id="btn__stop" fx:id="btn_stop" mnemonicParsing="false" styleClass="btn" text="Stop">
+                              <!--Stop Button-->
+                              <Button id="btn__stop" fx:id="btn_stop" mnemonicParsing="false" onMouseClicked="#handleStopClick" styleClass="btn" text="Stop">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="STOP" />
                                  </graphic>
@@ -140,13 +138,13 @@
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <TableView layoutX="28.0" layoutY="16.0" prefHeight="200.0" prefWidth="868.0">
                    <columns>
-                       <TableColumn prefWidth="94.0" text="Session ID"/>
-                       <TableColumn prefWidth="334.0" text="Customers"/>
-                       <TableColumn prefWidth="75.0" text="Starting time"/>
-                       <TableColumn prefWidth="75.0" text="Ending time"/>
+                       <TableColumn prefWidth="94.0" text="Session ID" />
+                       <TableColumn prefWidth="334.0" text="Customers" />
+                       <TableColumn prefWidth="75.0" text="Starting time" />
+                       <TableColumn prefWidth="75.0" text="Ending time" />
                    </columns>
                    <columnResizePolicy>
-                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                    </columnResizePolicy>
                </TableView>
            </AnchorPane>

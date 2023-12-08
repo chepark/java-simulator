@@ -25,8 +25,6 @@ class RandomTimeTest {
         int arrivalTime;
 
             arrivalTime = (int)  RandomTime.generateArrivalTimeGap();
-            //assertTrue(arrivalTime >= 2 && arrivalTime <= 10);
             System.out.println(arrivalTime);
-
     }
 }

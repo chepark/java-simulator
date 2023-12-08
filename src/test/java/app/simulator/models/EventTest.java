@@ -13,7 +13,7 @@ class EventTest {
     @BeforeAll
     public static void setup() throws Exception {
         Customer c = new Customer();
-        event = new Event(EventType.DONE, 10.0, ServicePointType.PANTTI);
+        event = new Event(10.0, ServicePointType.PANTTI);
     }
 
     @Test

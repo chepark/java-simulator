@@ -1,9 +1,7 @@
 package app.simulator.models;
 
 import app.simulator.types.CustomerType;
-import app.simulator.types.EventType;
 import app.simulator.types.ServicePointType;
-import app.simulator.util.timeUtil.RandomTime;
 
 import java.util.Random;
 
@@ -19,7 +17,6 @@ public class Event implements Comparable<Event> {
      * @param sp service point name: Queue1, Pantti, Market, Queue2, SelfCheckout, Checkout
      */
     public Event(double t, ServicePointType sp) {
-
         this.time = t;
         this.servicePoint = sp;
         setCustomerType();
@@ -49,9 +46,6 @@ public class Event implements Comparable<Event> {
         return time;
     }
 
-    public double addShoppingTime() {
-        return time + RandomTime.generateShoppingTime();
-    }
 
     /***
      * @return service point name: Queue1, Pantti, Market, Queue2, SelfCheckout, Checkout
