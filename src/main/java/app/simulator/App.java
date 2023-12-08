@@ -1,8 +1,7 @@
 package app.simulator;
 
-import app.simulator.controllers.SimulatorController;
-import app.simulator.database.DatabaseAccessor;
-import app.simulator.services.Engine;
+import app.simulator.dao.ServiceDao;
+import app.simulator.entity.ServiceTime;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -35,10 +35,9 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
-        DatabaseAccessor db = new DatabaseAccessor();
-        db.getConnection();
+        ServiceDao serviceDao = new ServiceDao();
+        List<ServiceTime> s = serviceDao.getAllServices();
+        System.out.println(s.toString());
 
-        //Engine simulatorEngine = new Engine();
-        //simulatorEngine.run();
     }
 }

@@ -1,15 +1,15 @@
 package app.simulator.entity;
 
-import java.time.LocalDateTime;
-
-public class Service {
+public class ServiceTime {
+    private int id;
     private String serviceName;
     private int totalCustomers;
     private double startingTime;
     private double endingTime;
     private double averageServiceTime;
 
-    public Service(String serviceName, int totalCustomers, double startingTime, double endingTime, double averageServiceTime) {
+    public ServiceTime(int id, String serviceName, int totalCustomers, double startingTime, double endingTime, double averageServiceTime) {
+        this.id = id;
         this.serviceName = serviceName;
         this.totalCustomers = totalCustomers;
         this.startingTime = startingTime;
@@ -55,5 +55,17 @@ public class Service {
 
     public void setAverageServiceTime(double averageServiceTime) {
         this.averageServiceTime = averageServiceTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id=" + id +
+                ", serviceName='" + serviceName + '\'' +
+                ", totalCustomers=" + totalCustomers +
+                ", startingTime=" + startingTime +
+                ", endingTime=" + endingTime +
+                ", averageServiceTime=" + averageServiceTime +
+                '}';
     }
 }

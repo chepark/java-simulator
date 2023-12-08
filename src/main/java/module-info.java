@@ -3,7 +3,8 @@ module app.simulator {
     requires javafx.fxml;
     requires java.sql; //mysql
     requires de.jensd.fx.glyphs.fontawesome;
-    requires java.desktop; // fontawesome
+    requires java.desktop;
+    requires mysql.connector.j; // fontawesome
 
 
     opens app.simulator.controllers to javafx.fxml;

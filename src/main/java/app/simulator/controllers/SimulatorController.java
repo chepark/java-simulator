@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
 
 public class SimulatorController {
 
+    @FXML
+    public ListView<String> list_selfcheckout;
     // service point status
     @FXML
     private ListView<String> list_queue1;
@@ -29,8 +31,6 @@ public class SimulatorController {
     private ListView<String> list_market;
     @FXML
     private ListView<String> list_queue2;
-    @FXML
-    private ListView<String> list_selfservice;
     @FXML
     private ListView<String> list_cashier;
 
@@ -46,7 +46,9 @@ public class SimulatorController {
     @FXML
     private Button btn_stop;
 
-    private Thread simulatorEngine;
+    private Engine simulatorEngine;
+
+    private ServicePoint[] servicePoints;
 
     /***
      * Display list of customer id waiting for returning pantti at Queue1.
@@ -106,12 +108,12 @@ public class SimulatorController {
      * @param e
      */
     public void handleStopClick(MouseEvent e) {
-        simulatorEngine.interrupt();
+        simulatorEngine.stop();
         System.out.println("stop");
     }
 
     // play button
-    public void playSimulation(ActionEvent e) {
+    public void playSimulation(ActionEvent e) throws InterruptedException {
         // get customers from model and start to display in table
         int customers = Integer.parseInt(input_number.getText());
         if (customers == 0 || input_number.getText().equals("")) {
@@ -122,5 +124,15 @@ public class SimulatorController {
 
         simulatorEngine = new Engine();
         simulatorEngine.start();
+
+
+        servicePoints = simulatorEngine.getServicePoints();
+        list_queue1.getItems().addAll(servicePoints[0].getQueueString());
+        list_pantti.getItems().addAll(servicePoints[1].getQueueString());
+        list_market.getItems().addAll(servicePoints[2].getQueueString());
+        list_queue2.getItems().addAll(servicePoints[3].getQueueString());
+        list_selfcheckout.getItems().addAll(servicePoints[4].getQueueString());
+        list_cashier.getItems().addAll(servicePoints[5].getQueueString());
+
     }
 }

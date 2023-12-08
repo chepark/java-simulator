@@ -11,7 +11,7 @@ public class ServicePoint {
     //ArrayList<Customer> queue;
     //ObservableList<Customer> oq;
 
-    ObservableList<Customer> queue = FXCollections.observableArrayList();
+    ArrayList<Integer> queue;
     ;
     double startTime;
     double endTime;
@@ -23,35 +23,16 @@ public class ServicePoint {
     public ServicePoint(ServicePointType type, EventList eventlist) {
         this.type = type;
         this.eventList = eventlist;
-        //queue = new ArrayList ();
-
-        queue.addListener(new ListChangeListener() { // add an event listerer for the observable list
-            @Override
-            public void onChanged(
-                    ListChangeListener.Change c) { // Method that will execute when any changes occured
-                //System.out.println("Changes found ...  " + c.getList() + type); // Show a message that a change occured
-            }
-        });
+        queue = new ArrayList();
     }
 
-    public void removeListener() {
-        queue.removeListener(new ListChangeListener() { // add an event listerer for the observable list
-            @Override
-            public void onChanged(
-                    ListChangeListener.Change c) { // Method that will execute when any changes occured
-                // System.out.println("Removing listener  " + c.getList()); // Show a message that a change occured
-            }
-        });
+    public void addToQueue(int customerId) {
+        queue.addFirst(customerId);
     }
 
-
-    public void addToQueue(Customer customer) {
-        queue.addFirst(customer);
-    }
-
-    public Customer removeFromQueue() {
+    public Integer removeFromQueue() {
         if (!queue.isEmpty()) {
-            Customer removedCustomer = queue.getLast();
+            int removedCustomer = queue.getLast();
             queue.removeLast();
             handledCustomers++;
             return removedCustomer;
@@ -77,8 +58,16 @@ public class ServicePoint {
         this.endTime = endTime;
     }
 
-    public ObservableList<Customer> getQueue() {
+    public ArrayList<Integer> getQueue() {
         return queue;
+    }
+
+    public ArrayList<String> getQueueString() {
+        ArrayList<String> queueString = new ArrayList<>();
+        for (int i = 0; i < queue.size(); i++) {
+            queueString.add(Integer.toString(queue.get(i)));
+        }
+        return queueString;
     }
 
     public int getQueueSize() {
@@ -122,7 +111,7 @@ public class ServicePoint {
                 ", handledCustomers=" + handledCustomers +
                 ", averageWaitingTime=" + getAverageWaitingTime() +
                 ", type=" + type +
-                ", isIdle=" + isIdle +
+                ", queue=" + getQueueString() +
                 '}';
     }
 
