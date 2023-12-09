@@ -36,7 +36,6 @@ public class RecordDao {
     public void saveRecord(Record r) {
         Connection conn = DatabaseAccessor.getConnection();
         String sql = "INSERT INTO event (service_point, customers) VALUES (?, ?)";
-        System.out.println("test: " + r.getCustomers());
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, r.getServicePoint());

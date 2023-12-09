@@ -25,7 +25,7 @@ public class DatabaseAccessor {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             databaseLink = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
-            System.out.println("Connected to database: " + DB_NAME);
+            //System.out.println("Connected to database: " + DB_NAME);
         }  catch (ClassNotFoundException | SQLException e) {
             System.out.println("Driver not found: ");
             e.printStackTrace();
