@@ -1,24 +1,19 @@
 package app.simulator.services;
 
+import app.simulator.dao.RecordDao;
+import app.simulator.dao.WaitingTimeDao;
+import app.simulator.entity.Record;
+import app.simulator.entity.WaitingTime;
 import app.simulator.models.*;
-import app.simulator.types.CustomerType;
-import app.simulator.types.EventType;
 import app.simulator.types.ServicePointType;
 import app.simulator.util.timeUtil.RandomTime;
 
-import java.util.concurrent.TimeUnit;
-
-
 public class Engine extends Thread {
-    private final ServicePointType[] servicePointTypes = ServicePointType.values();
     protected EventList eventList;
-    protected EventList copiedEventList;
     private int numOfCustomers;
     private ServicePoint[] servicePoints;
-    private boolean running = true;
 
     public Engine() {
-        //numOfCustomers = 6;
         numOfCustomers = RandomTime.getCustomerNumber();
         eventList = new EventList<Event>();
         servicePoints = new ServicePoint[6];
@@ -37,13 +32,11 @@ public class Engine extends Thread {
 
     public void run() {
         initialize();
-        prepareEvents();
-        // reset all service points to run the copiedEvents
-        for (int i = 0; i < 6; i++) {
-            servicePoints[i].reset();
-        }
-        //System.out.println(copiedEventList.toString());
-        //processCopiedEventList();
+        processEvents();
+
+        saveResultToDB(servicePoints[0]);
+        saveResultToDB(servicePoints[3]);
+
         System.out.println(servicePoints[0].toString());
         System.out.println(servicePoints[3].toString());
     }
@@ -56,21 +49,21 @@ public class Engine extends Thread {
         }
     }
 
-    protected void prepareEvents() {
-        int c = 0;
+    protected void processEvents() {
+        Customer c;
         double t; // time
-        //copiedEventList = new EventList<>();
 
         while (true) {
-            c++;
             Event eventToProcess = eventList.remove(); // first event in the eventList
             if (eventToProcess == null) {
                 return;
             }
-            //copiedEventList.addEvent(eventToProcess);
+
+            System.out.println("Event" + eventToProcess.toString());
             t = eventToProcess.getTime();
             switch (eventToProcess.getServicePoint()) {
             case ServicePointType.ARRIVAL:
+                c = new Customer();
                 if (eventToProcess.hasPantti()) {
                     servicePoints[0].addToQueue(c);
                     eventList.addEvent(new Event(t, ServicePointType.QUEUE1));
@@ -78,22 +71,25 @@ public class Engine extends Thread {
                     if (servicePoints[0].getHandledCustomers() == 0) {
                         servicePoints[0].setStartTime(t);
                     }
+                    // save event record to db
+                    saveEventRecordToDB(servicePoints[0]);
                 } else {
                     servicePoints[2].addToQueue(c);
                     eventList.addEvent(new Event(t, ServicePointType.MARKET));
+                    // save event record to db
+                    saveEventRecordToDB(servicePoints[2]);
                 }
                 break;
             case ServicePointType.QUEUE1:
                 t = t + RandomTime.generate(ServicePointType.QUEUE1);
                 if (servicePoints[1].isIdle()) {
                     c = servicePoints[0].removeFromQueue();
-
                     servicePoints[0].setEndTime(t);
-
                     servicePoints[1].addToQueue(c);
-                    servicePoints[1].addToQueue(c);
-                    //
                     eventList.addEvent(new Event(t, ServicePointType.PANTTI));
+                    // save event record to db
+                    saveEventRecordToDB(servicePoints[0]);
+                    saveEventRecordToDB(servicePoints[1]);
                 }
                 break;
             case ServicePointType.PANTTI:
@@ -102,6 +98,9 @@ public class Engine extends Thread {
                 servicePoints[2].addToQueue(c);
                 t = t + RandomTime.generateShoppingTime();
                 eventList.addEvent(new Event(t, ServicePointType.MARKET));
+                // save event record to db
+                saveEventRecordToDB(servicePoints[1]);
+                saveEventRecordToDB(servicePoints[2]);
                 break;
             case ServicePointType.MARKET:
                 if (servicePoints[3].isIdle() || servicePoints[2].getQueue().size() < 6) {
@@ -115,52 +114,65 @@ public class Engine extends Thread {
                     t = t + RandomTime.generate(ServicePointType.QUEUE2);
                     eventList.addEvent(new Event(t, ServicePointType.QUEUE2));
 
+                    // save event record to db
+                    saveEventRecordToDB(servicePoints[2]);
+                    saveEventRecordToDB(servicePoints[3]);
                 }
                 break;
             case ServicePointType.QUEUE2:
                 if (servicePoints[4].isIdle()) {
                     c = servicePoints[3].removeFromQueue();
-
                     servicePoints[3].setEndTime(t);
-
                     servicePoints[4].addToQueue(c);
                     t = t + RandomTime.generate(ServicePointType.SELF_CHECKOUT);
                     eventList.addEvent(new Event(t, ServicePointType.SELF_CHECKOUT));
+
+                    // save event record to db
+                    saveEventRecordToDB(servicePoints[3]);
+                    saveEventRecordToDB(servicePoints[4]);
                 } else if (servicePoints[5].isIdle()) {
                     c = servicePoints[3].removeFromQueue();
-
                     servicePoints[3].setEndTime(t);
                     servicePoints[5].addToQueue(c);
                     t = t + RandomTime.generate(ServicePointType.CASHIER);
                     eventList.addEvent(new Event(t, ServicePointType.CASHIER));
+
+                    // save event record to db
+                    saveEventRecordToDB(servicePoints[3]);
+                    saveEventRecordToDB(servicePoints[5]);
                 }
                 break;
             case ServicePointType.SELF_CHECKOUT:
                 servicePoints[4].removeFromQueue();
-
                 servicePoints[3].setEndTime(t);
                 servicePoints[4].setIdle(true);
+
+                // save event record to db
+                saveEventRecordToDB(servicePoints[4]);
+
                 break;
             case ServicePointType.CASHIER:
                 servicePoints[5].removeFromQueue();
-
                 servicePoints[3].setEndTime(t);
                 servicePoints[5].setIdle(true);
+
+                // save event record to db
+                saveEventRecordToDB(servicePoints[5]);
                 break;
             }
-            System.out.println("EventList size: " + eventToProcess.toString());
-            System.out.println(servicePoints[0].toString());
-            System.out.println(servicePoints[1].toString());
-            System.out.println(servicePoints[2].toString());
-            System.out.println(servicePoints[3].toString());
-            System.out.println(servicePoints[4].toString());
-            System.out.println(servicePoints[5].toString());
         }
     }
 
-    @Override
-    public void interrupt() {
-        running = false;
-        super.interrupt();
+    protected void saveResultToDB(ServicePoint servicePoint) {
+        WaitingTime w = new WaitingTime(servicePoint.getType().toString(), servicePoint.getHandledCustomers(), servicePoint.getStartTime(), servicePoint.getEndTime(), servicePoint.getAvgWaitingTime());
+        WaitingTimeDao waitingTimeDao = new WaitingTimeDao();
+        waitingTimeDao.putWaitTime(w);
+        System.out.println("Data saved!");
+    }
+
+    protected void saveEventRecordToDB(ServicePoint servicePoint) {
+        Record r = new Record(servicePoint);
+        RecordDao recordDao = new RecordDao();
+        recordDao.saveRecord(r);
     }
 }

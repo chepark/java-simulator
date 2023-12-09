@@ -47,10 +47,6 @@ public class RandomTime {
         return normalGenerator.sample();
     }
 
-    public static double ser() {
-        return PANTTI_SERVICE_TIME;
-    }
-
     public static int getCustomerNumber() {
         return (int) customerNumber;
     }

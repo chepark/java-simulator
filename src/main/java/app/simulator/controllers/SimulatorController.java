@@ -108,7 +108,7 @@ public class SimulatorController {
      * @param e
      */
     public void handleStopClick(MouseEvent e) {
-        simulatorEngine.stop();
+        simulatorEngine.interrupt();
         System.out.println("stop");
     }
 
@@ -125,7 +125,6 @@ public class SimulatorController {
         simulatorEngine = new Engine();
         simulatorEngine.start();
 
-
         servicePoints = simulatorEngine.getServicePoints();
         list_queue1.getItems().addAll(servicePoints[0].getQueueString());
         list_pantti.getItems().addAll(servicePoints[1].getQueueString());
@@ -133,6 +132,5 @@ public class SimulatorController {
         list_queue2.getItems().addAll(servicePoints[3].getQueueString());
         list_selfcheckout.getItems().addAll(servicePoints[4].getQueueString());
         list_cashier.getItems().addAll(servicePoints[5].getQueueString());
-
     }
 }

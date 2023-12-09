@@ -1,16 +1,11 @@
 package app.simulator;
 
-import app.simulator.dao.ServiceTimeDao;
-import app.simulator.entity.ServiceTime;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
-
 
 /**
  * This application is created as a group assignment for Project Programming course in Metropolia UAS.
@@ -34,16 +29,5 @@ public class App extends Application {
         stage.setTitle("Supermarket simulator");
         stage.setScene(scene);
         stage.show();
-
-        // commented out below to avoid db connection error.
-        // you need db and table to run this code.
-        // see
-        /*
-        ServiceTimeDao serviceDao = new ServiceTimeDao();
-        List<ServiceTime> s = serviceDao.getAllServices();
-        ServiceTime c = new ServiceTime("service2", 32, 12.0, 13.0, 1.0);
-        serviceDao.putService(c);
-        System.out.println(s.toString());
-*/
     }
 }

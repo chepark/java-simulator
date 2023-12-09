@@ -17,5 +17,4 @@ class ArrivalTest {
 
         // check number of arrival is correct-
      }
-
 }

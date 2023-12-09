@@ -1,22 +1,22 @@
 package app.simulator.dao;
 
 import app.simulator.database.DatabaseAccessor;
-import app.simulator.entity.ServiceTime;
+import app.simulator.entity.WaitingTime;
 import java.sql.*;
 import java.util.*;
 
 /***
  * This class is used to access the database and retrieve the data from the database
  */
-public class ServiceTimeDao {
+public class WaitingTimeDao {
     /***
      * Get all services from the database
      * @return list of all the services
      */
-    public List<ServiceTime> getAllServices() {
+    public List<WaitingTime> getAllWaitTime() {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "SELECT id, service_name, total_customers, starting_time, ending_time, avg_service_time FROM service_time";
-        List<ServiceTime> services = new ArrayList<ServiceTime>();
+        String sql = "SELECT id, service_name, total_customers, starting_time, ending_time, avg_service_time FROM waiting_time";
+        List<WaitingTime> services = new ArrayList<WaitingTime>();
 
         try {
             Statement s = conn.createStatement();
@@ -29,10 +29,10 @@ public class ServiceTimeDao {
                 int total_customer = rs.getInt(3);
                 double starting_time = rs.getDouble(4);
                 double ending_time = rs.getDouble(5);
-                double avg_service_time = rs.getDouble(6);
+                double avg_waiting_time = rs.getDouble(6);
 
-                ServiceTime emp = new ServiceTime(id, service_name, total_customer, starting_time, ending_time, avg_service_time);
-                services.add(emp);
+                WaitingTime wt = new WaitingTime(id, service_name, total_customer, starting_time, ending_time, avg_waiting_time);
+                services.add(wt);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,9 +46,9 @@ public class ServiceTimeDao {
      * @param id
      * @return
      */
-    public ServiceTime getService(int id) {
+    public WaitingTime setWaitTime(int id) {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "SELECT service_name, total_customers, starting_time, ending_time, avg_service_time FROM service_time WHERE id=?";
+        String sql = "SELECT service_name, total_customers, starting_time, ending_time, avg_service_time FROM waiting_time WHERE id=?";
 
         String service_name = null;
          int total_customer = 0;
@@ -78,7 +78,7 @@ public class ServiceTimeDao {
         }
 
         if (count==1) {
-            return new ServiceTime(id, service_name, total_customer, starting_time, ending_time, avg_service_time);
+            return new WaitingTime(id, service_name, total_customer, starting_time, ending_time, avg_service_time);
         }
         else {
             return null;
@@ -87,18 +87,18 @@ public class ServiceTimeDao {
 
     /***
      * Save a service in the database
-     * @param emp
+     * @param wt
      */
-    public void putService(ServiceTime emp) {
+    public void putWaitTime(WaitingTime wt) {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "INSERT INTO service_time (service_name, total_customers, starting_time, ending_time, avg_service_time) VALUES (?, ?, ?, ?, ? )";
+        String sql = "INSERT INTO waiting_time (service_name, total_customers, starting_time, ending_time, avg_waiting_time) VALUES (?, ?, ?, ?, ? )";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, emp.getServiceName());
-            ps.setInt(2, emp.getTotalCustomers());
-            ps.setDouble(3, emp.getStartingTime());
-            ps.setDouble(4, emp.getEndingTime());
-            ps.setDouble(5, emp.getAverageServiceTime());
+            ps.setString(1, wt.getServiceName());
+            ps.setInt(2, wt.getTotalCustomers());
+            ps.setDouble(3, wt.getStartingTime());
+            ps.setDouble(4, wt.getEndingTime());
+            ps.setDouble(5, wt.getAverageWaitingTime());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

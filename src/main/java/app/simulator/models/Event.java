@@ -19,7 +19,6 @@ public class Event implements Comparable<Event> {
      * @param sp service point name: Queue1, Pantti, Market, Queue2, SelfCheckout, Checkout
      */
     public Event(double t, ServicePointType sp) {
-
         this.time = t;
         this.servicePoint = sp;
         setCustomerType();
@@ -41,16 +40,11 @@ public class Event implements Comparable<Event> {
         }
     }
 
-
     /***
      * @return time of event
      */
     public double getTime() {
         return time;
-    }
-
-    public double addShoppingTime() {
-        return time + RandomTime.generateShoppingTime();
     }
 
     /***
@@ -62,7 +56,7 @@ public class Event implements Comparable<Event> {
 
 
     public boolean hasPantti() {
-        return customerType == CustomerType.HAS_PANTTI;
+        return customerType == CustomerType.HAS_PANTTI ? true : false;
     }
 
     /***
@@ -85,7 +79,7 @@ public class Event implements Comparable<Event> {
      */
     @Override
     public String toString() {
-        return "Event{" +
+        return " " +
                 " servicePoint=" + servicePoint +
                 ", time=" + time +
                 ", customerType=" + customerType +

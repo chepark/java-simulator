@@ -6,7 +6,7 @@ import app.simulator.types.ServicePointType;
 import java.util.*;
 
 public class ServicePoint {
-    ArrayList<Integer> queue;
+    ArrayList<Customer> queue;
     double startTime;
     double endTime;
     private int handledCustomers = 0;
@@ -20,13 +20,13 @@ public class ServicePoint {
         queue = new ArrayList();
     }
 
-    public void addToQueue(int customerId) {
-        queue.addFirst(customerId);
+    public void addToQueue(Customer c) {
+        queue.addFirst(c);
     }
 
-    public Integer removeFromQueue() {
+    public Customer removeFromQueue() {
         if (!queue.isEmpty()) {
-            int removedCustomer = queue.getLast();
+            Customer removedCustomer = queue.getLast();
             queue.removeLast();
             handledCustomers++;
             return removedCustomer;
@@ -51,16 +51,16 @@ public class ServicePoint {
         this.endTime = endTime;
     }
 
-    public ArrayList<Integer> getQueue() {
+    public ArrayList<Customer> getQueue() {
         return queue;
     }
 
-    public ArrayList<String> getQueueString() {
-        ArrayList<String> queueString = new ArrayList<>();
-        for (int i = 0; i < queue.size(); i++) {
-            queueString.add(Integer.toString(queue.get(i)));
+    public String getQueueString() {
+        StringJoiner joiner = new StringJoiner(",");
+        for (Customer customer : queue) {
+            joiner.add(Integer.toString(customer.getId()));
         }
-        return queueString;
+        return joiner.toString();
     }
 
     public int getQueueSize() {
@@ -83,8 +83,12 @@ public class ServicePoint {
         isIdle = idle;
     }
 
-    public double getAverageWaitingTime() {
-        return (endTime - startTime) / handledCustomers;
+    public double getAvgWaitingTime() {
+        if (handledCustomers != 0) {
+            return (endTime - startTime) / handledCustomers;
+        } else {
+            return 0; // Or any default value you prefer when no customers are handled
+        }
     }
 
     public void reset() {
@@ -102,7 +106,7 @@ public class ServicePoint {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", handledCustomers=" + handledCustomers +
-                ", averageWaitingTime=" + getAverageWaitingTime() +
+                ", averageWaitingTime=" + getAvgWaitingTime() +
                 ", type=" + type +
                 ", queue=" + getQueueString() +
                 '}';
