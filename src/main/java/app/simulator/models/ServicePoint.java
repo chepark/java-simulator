@@ -1,18 +1,12 @@
 package app.simulator.models;
 
 import app.simulator.types.ServicePointType;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+
 
 import java.util.*;
 
 public class ServicePoint {
-    //ArrayList<Customer> queue;
-    //ObservableList<Customer> oq;
-
     ArrayList<Integer> queue;
-    ;
     double startTime;
     double endTime;
     private int handledCustomers = 0;
@@ -37,7 +31,6 @@ public class ServicePoint {
             handledCustomers++;
             return removedCustomer;
         } else {
-            // add remove listener here?
             return null;
         }
     }

@@ -1,16 +1,9 @@
 package app.simulator.models;
 
-import app.simulator.types.CustomerType;
-import app.simulator.types.EventType;
 import app.simulator.types.ServicePointType;
 import app.simulator.util.timeUtil.RandomTime;
 
-import java.util.LinkedList;
-
 public class Arrival {
-    private static double arrivalTimeGap;
-
-
     public static Event generateNextArrival() {
         double clockTime = Clock.getInstance().getTime();
         double arrivalTime = clockTime + RandomTime.generateArrivalTimeGap();

@@ -1,5 +1,10 @@
 package app.simulator.controllers;
 
-class SimulatorControllerTest {
+import org.junit.jupiter.api.BeforeAll;
 
+class SimulatorControllerTest {
+    @BeforeAll
+    static void setUp() {
+        SimulatorController simulatorController = new SimulatorController();
+    }
 }
