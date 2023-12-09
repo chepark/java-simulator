@@ -3,6 +3,7 @@ package app.simulator.controllers;
 import app.simulator.models.ServicePoint;
 import app.simulator.services.Engine;
 import app.simulator.util.timeUtil.RandomTime;
+import app.simulator.views.GUI;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -49,6 +50,12 @@ public class SimulatorController {
     private Engine simulatorEngine;
 
     private ServicePoint[] servicePoints;
+
+    private GUI gui;
+
+    public SimulatorController(GUI gui) {
+        this.gui = gui;
+    }
 
     /***
      * Display list of customer id waiting for returning pantti at Queue1.

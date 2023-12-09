@@ -1,5 +1,6 @@
-package app.simulator;
+package app.simulator.views;
 
+import app.simulator.controllers.SimulatorController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,18 +17,25 @@ import java.io.IOException;
  * @author Vladislav Zakatov
  */
 
-public class App extends Application {
+public class GUI extends Application {
+    private SimulatorController simulatorController;
+
     public static void main(String[] args) {
         launch();
     }
 
+    public void init() {
+        simulatorController = new SimulatorController(this);
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/Fxml/Simulator.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource("/Fxml/Simulator.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 900, 400);
         stage.setTitle("Supermarket simulator");
         stage.setScene(scene);
         stage.show();
     }
+
 }
