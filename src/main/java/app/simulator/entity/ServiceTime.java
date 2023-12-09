@@ -8,8 +8,18 @@ public class ServiceTime {
     private double endingTime;
     private double averageServiceTime;
 
+    // for fetching data
     public ServiceTime(int id, String serviceName, int totalCustomers, double startingTime, double endingTime, double averageServiceTime) {
         this.id = id;
+        this.serviceName = serviceName;
+        this.totalCustomers = totalCustomers;
+        this.startingTime = startingTime;
+        this.endingTime = endingTime;
+        this.averageServiceTime = averageServiceTime;
+    }
+
+    // for saving data
+    public ServiceTime(String serviceName, int totalCustomers, double startingTime, double endingTime, double averageServiceTime) {
         this.serviceName = serviceName;
         this.totalCustomers = totalCustomers;
         this.startingTime = startingTime;

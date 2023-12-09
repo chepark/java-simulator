@@ -8,7 +8,7 @@ import java.util.*;
 /***
  * This class is used to access the database and retrieve the data from the database
  */
-public class ServiceDao {
+public class ServiceTimeDao {
     /***
      * Get all services from the database
      * @return list of all the services
@@ -91,7 +91,7 @@ public class ServiceDao {
      */
     public void putService(ServiceTime emp) {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "INSERT INTO service_time (service_name, total_customers, starting_time, ending_time, avg_service_time) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO service_time (service_name, total_customers, starting_time, ending_time, avg_service_time) VALUES (?, ?, ?, ?, ? )";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, emp.getServiceName());
@@ -99,7 +99,6 @@ public class ServiceDao {
             ps.setDouble(3, emp.getStartingTime());
             ps.setDouble(4, emp.getEndingTime());
             ps.setDouble(5, emp.getAverageServiceTime());
-
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
