@@ -24,9 +24,6 @@ public class GUI extends Application {
         launch();
     }
 
-    public void init() {
-        simulatorController = new SimulatorController(this);
-    }
 
     @Override
     public void start(Stage stage) throws IOException {

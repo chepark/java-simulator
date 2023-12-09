@@ -11,7 +11,6 @@ public class DatabaseAccessor {
         try {
             getConnection().close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -22,6 +21,7 @@ public class DatabaseAccessor {
         final String DB_PASSWORD="root";
         final String DB_URL="jdbc:mysql://localhost:3306/"+DB_NAME;
 
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             databaseLink = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);

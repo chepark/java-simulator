@@ -52,10 +52,11 @@ public class SimulatorController {
     private ServicePoint[] servicePoints;
 
     private GUI gui;
-
+/*
     public SimulatorController(GUI gui) {
         this.gui = gui;
     }
+*/
 
     /***
      * Display list of customer id waiting for returning pantti at Queue1.
@@ -99,7 +100,6 @@ public class SimulatorController {
     public void setCashier() {
         // get customers from model and display in list
     }
-
 
     /***
      * Get the value and connect it to models-> Clock
