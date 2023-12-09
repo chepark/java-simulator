@@ -35,11 +35,15 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
+        // commented out below to avoid db connection error.
+        // you need db and table to run this code.
+        // see
+        /*
         ServiceTimeDao serviceDao = new ServiceTimeDao();
         List<ServiceTime> s = serviceDao.getAllServices();
         ServiceTime c = new ServiceTime("service2", 32, 12.0, 13.0, 1.0);
         serviceDao.putService(c);
         System.out.println(s.toString());
-
+*/
     }
 }

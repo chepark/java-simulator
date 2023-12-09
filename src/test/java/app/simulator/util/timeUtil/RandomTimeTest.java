@@ -1,13 +1,11 @@
 package app.simulator.util.timeUtil;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RandomTimeTest {
     private RandomTime rt;
-
 
     @Test
     public void testGenerateShoppingTime() {
@@ -27,6 +25,6 @@ class RandomTimeTest {
             arrivalTime = (int)  RandomTime.generateArrivalTimeGap();
             //assertTrue(arrivalTime >= 2 && arrivalTime <= 10);
             System.out.println(arrivalTime);
-
+        assertTrue(arrivalTime >= 0 && arrivalTime <= 10);
     }
 }
