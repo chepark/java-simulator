@@ -15,7 +15,7 @@ public class WaitingTimeDao {
      */
     public List<WaitingTime> getAllWaitTime() {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "SELECT id, service_name, total_customers, starting_time, ending_time, avg_service_time FROM waiting_time";
+        String sql = "SELECT id, service_name, total_customers, starting_time, ending_time, avg_waiting_time FROM waiting_time";
         List<WaitingTime> services = new ArrayList<WaitingTime>();
 
         try {
@@ -46,15 +46,15 @@ public class WaitingTimeDao {
      * @param id
      * @return
      */
-    public WaitingTime setWaitTime(int id) {
+    public WaitingTime getWaitTime(int id) {
         Connection conn = DatabaseAccessor.getConnection();
-        String sql = "SELECT service_name, total_customers, starting_time, ending_time, avg_service_time FROM waiting_time WHERE id=?";
+        String sql = "SELECT service_name, total_customers, starting_time, ending_time, avg_waiting_time FROM waiting_time WHERE id=?";
 
         String service_name = null;
          int total_customer = 0;
          double starting_time = 0;
          double ending_time = 0;
-         double avg_service_time = 0;
+        double avg_waiting_time = 0;
         int count = 0;
 
         try {
@@ -71,14 +71,14 @@ public class WaitingTimeDao {
                 total_customer = rs.getInt(2);
                 starting_time = rs.getDouble(3);
                 ending_time = rs.getDouble(4);
-                avg_service_time = rs.getDouble(5);
+                avg_waiting_time = rs.getDouble(5);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         if (count==1) {
-            return new WaitingTime(id, service_name, total_customer, starting_time, ending_time, avg_service_time);
+            return new WaitingTime(id, service_name, total_customer, starting_time, ending_time, avg_waiting_time);
         }
         else {
             return null;
