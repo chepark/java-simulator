@@ -6,11 +6,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+/***
+ * Test class for WaitingTimeDao
+ * Data should be inserted to database before running tests
+ * @see app.simulator.dao.WaitingTimeDao
+ * @see app.simulator.entity.WaitingTime
+ */
 class WaitTimeDaoTest {
     private static WaitingTimeDao waitingTimeDao;
-    // test fetching data
     @BeforeAll
     public static void setUp() throws Exception {
         waitingTimeDao = new WaitingTimeDao();
@@ -19,6 +24,12 @@ class WaitTimeDaoTest {
     @Test
     public void testGetAllWaitingTimes() {
         List<WaitingTime> waitingTimeList = waitingTimeDao.getAllWaitTime();
-        assertTrue(waitingTimeList.size() > 0);
+        assertFalse(waitingTimeList.isEmpty());
+    }
+
+    @Test
+    public void testGetWaitingTimeById() {
+        WaitingTime waitingTime = waitingTimeDao.getWaitTime(1);
+        assertNotNull(waitingTime);
     }
 }
