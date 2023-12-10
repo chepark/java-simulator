@@ -17,19 +17,23 @@ import java.io.IOException;
  * @author Vladislav Zakatov
  */
 
-public class GUI extends Application {
+public class App extends Application {
     private SimulatorController simulatorController;
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource("/Fxml/Simulator.fxml"));
 
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/Fxml/Simulator.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 400);
+
+        simulatorController = fxmlLoader.getController();
+        simulatorController.setAppReference(this);
+        
         stage.setTitle("Supermarket simulator");
         stage.setScene(scene);
         stage.show();

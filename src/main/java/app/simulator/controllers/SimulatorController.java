@@ -3,21 +3,11 @@ package app.simulator.controllers;
 import app.simulator.models.ServicePoint;
 import app.simulator.services.Engine;
 import app.simulator.util.timeUtil.RandomTime;
-import app.simulator.views.GUI;
-import javafx.animation.AnimationTimer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import app.simulator.views.App;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class SimulatorController {
 
@@ -51,12 +41,12 @@ public class SimulatorController {
 
     private ServicePoint[] servicePoints;
 
-    private GUI gui;
-/*
-    public SimulatorController(GUI gui) {
-        this.gui = gui;
+    private App view;
+
+    public void setAppReference(App view) {
+        this.view = view;
     }
-*/
+
 
     /***
      * Display list of customer id waiting for returning pantti at Queue1.
