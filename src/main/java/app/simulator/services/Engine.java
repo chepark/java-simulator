@@ -2,8 +2,8 @@ package app.simulator.services;
 
 import app.simulator.dao.RecordDao;
 import app.simulator.dao.WaitingTimeDao;
-import app.simulator.entity.Record;
-import app.simulator.entity.WaitingTime;
+import app.simulator.models.Record;
+import app.simulator.models.WaitingTime;
 import app.simulator.models.*;
 import app.simulator.types.ServicePointType;
 import app.simulator.util.timeUtil.RandomTime;
@@ -26,10 +26,6 @@ public class Engine extends Thread {
         servicePoints[3] = new ServicePoint(ServicePointType.QUEUE2, eventList); // Queue2
         servicePoints[4] = new ServicePoint(ServicePointType.SELF_CHECKOUT, eventList); // SelfCheckout
         servicePoints[5] = new ServicePoint(ServicePointType.CASHIER, eventList);  // Cashier
-    }
-
-    public ServicePoint[] getServicePoints() {
-        return servicePoints;
     }
 
     public void run() {
@@ -55,6 +51,11 @@ public class Engine extends Thread {
         Customer c;
         double t; // time
 
+        // process events by removing the first event from the eventList
+        // when an event is removed,
+        // 1) add or remove customers from the queue in the service point
+        // 2) set start time or end time of the service point
+        // 3) save the service point record to db
         while (true) {
             Event eventToProcess = eventList.remove(); // first event in the eventList
             if (eventToProcess == null) {
@@ -170,7 +171,6 @@ public class Engine extends Thread {
         WaitingTime w = new WaitingTime(servicePoint.getType().toString(), servicePoint.getHandledCustomers(), servicePoint.getStartTime(), servicePoint.getEndTime(), servicePoint.getAvgWaitingTime());
         WaitingTimeDao waitingTimeDao = new WaitingTimeDao();
         waitingTimeDao.putWaitTime(w);
-        System.out.println("Data saved!");
     }
 
     protected void saveEventRecordToDB(ServicePoint servicePoint) {

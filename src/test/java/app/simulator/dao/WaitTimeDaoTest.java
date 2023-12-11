@@ -1,6 +1,6 @@
 package app.simulator.dao;
 
-import app.simulator.entity.WaitingTime;
+import app.simulator.models.WaitingTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for WaitingTimeDao
  * Data should be inserted to database before running tests
  * @see app.simulator.dao.WaitingTimeDao
- * @see app.simulator.entity.WaitingTime
+ * @see WaitingTime
  */
 @DisplayName("Test WaitingTimeDao class")
 class WaitTimeDaoTest {

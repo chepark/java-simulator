@@ -1,8 +1,4 @@
-package app.simulator.entity;
-
-import app.simulator.models.ServicePoint;
-
-import java.util.ArrayList;
+package app.simulator.models;
 
 public class Record {
     private int id;
@@ -24,15 +20,8 @@ public class Record {
   return customers;
     }
 
-    public void setCustomers(String customers) {
-        this.customers = customers;
-    }
-
     public String getServicePoint() {
         return servicePoint;
     }
-
-    public void setServicePoint(String servicePoint) {
-        this.servicePoint = servicePoint;
-    }
+    
 }

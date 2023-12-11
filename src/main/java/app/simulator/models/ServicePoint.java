@@ -2,7 +2,6 @@ package app.simulator.models;
 
 import app.simulator.types.ServicePointType;
 
-
 import java.util.*;
 
 public class ServicePoint {
@@ -63,10 +62,6 @@ public class ServicePoint {
         return joiner.toString();
     }
 
-    public int getQueueSize() {
-        return queue.size();
-    }
-
     public ServicePointType getType() {
         return type;
     }
@@ -111,6 +106,4 @@ public class ServicePoint {
                 ", queue=" + getQueueString() +
                 '}';
     }
-
-
 }

@@ -1,12 +1,12 @@
 package app.simulator.dao;
 
 import app.simulator.database.DatabaseAccessor;
-import app.simulator.entity.WaitingTime;
+import app.simulator.models.WaitingTime;
 import java.sql.*;
 import java.util.*;
 
 /***
- * This class is used to access the database and retrieve the data from the database
+ * Data Access Object for the waiting_time table in the database
  */
 public class WaitingTimeDao {
     /***

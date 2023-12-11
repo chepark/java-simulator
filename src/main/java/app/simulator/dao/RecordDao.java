@@ -1,13 +1,20 @@
 package app.simulator.dao;
 
 import app.simulator.database.DatabaseAccessor;
-import app.simulator.entity.Record;
-import app.simulator.models.ServicePoint;
+import app.simulator.models.Record;
 
 import java.sql.*;
 import java.util.*;
 
+/***
+ * Data Access Object for the event table in the database.
+ */
 public class RecordDao {
+
+    /***
+     * Get all records from the event table in database.
+     * @return
+     */
     public List<Record> getAllRecords() {
         Connection conn = DatabaseAccessor.getConnection();
         String sql = "SELECT id, service_point, customers FROM event";
@@ -33,6 +40,10 @@ public class RecordDao {
         return events;
     }
 
+    /***
+     * Save a record to the database
+     * @param r record that includes service point name and customer ids
+     */
     public void saveRecord(Record r) {
         Connection conn = DatabaseAccessor.getConnection();
         String sql = "INSERT INTO event (service_point, customers) VALUES (?, ?)";
@@ -51,6 +62,9 @@ public class RecordDao {
         }
     }
 
+    /***
+     * Remove all records from the database
+     */
     public void removeAllRecords() {
         Connection conn = DatabaseAccessor.getConnection();
         String sql = "DELETE FROM event";

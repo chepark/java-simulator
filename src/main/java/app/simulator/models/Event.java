@@ -1,9 +1,7 @@
 package app.simulator.models;
 
 import app.simulator.types.CustomerType;
-import app.simulator.types.EventType;
 import app.simulator.types.ServicePointType;
-import app.simulator.util.timeUtil.RandomTime;
 
 import java.util.Random;
 

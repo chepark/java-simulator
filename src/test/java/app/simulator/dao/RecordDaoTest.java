@@ -1,5 +1,6 @@
 package app.simulator.dao;
 
+import app.simulator.models.Record;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /***
  * Test class for RecordDao
  * @see app.simulator.dao.RecordDao
- * @see app.simulator.entity.Record
+ * @see Record
  */
 class RecordDaoTest {
 private static RecordDao recordDao;

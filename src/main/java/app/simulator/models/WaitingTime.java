@@ -1,4 +1,4 @@
-package app.simulator.entity;
+package app.simulator.models;
 
 /***
  * Entity for the simulation result of waiting time of queue1 and queue2
@@ -34,40 +34,24 @@ public class WaitingTime {
         return serviceName;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
 
     public int getTotalCustomers() {
         return totalCustomers;
     }
 
-    public void setTotalCustomers(int totalCustomers) {
-        this.totalCustomers = totalCustomers;
-    }
 
     public double getStartingTime() {
         return startingTime;
     }
 
-    public void setStartingTime(double startingTime) {
-        this.startingTime = startingTime;
-    }
 
     public double getEndingTime() {
         return endingTime;
     }
 
-    public void setEndingTime(double endingTime) {
-        this.endingTime = endingTime;
-    }
 
     public double getAverageWaitingTime() {
         return averageWaitingTime;
-    }
-
-    public void setAverageWaitingTime(double averageWaitingTime) {
-        this.averageWaitingTime = averageWaitingTime;
     }
 
     @Override

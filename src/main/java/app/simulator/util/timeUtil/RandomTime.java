@@ -1,12 +1,8 @@
 package app.simulator.util.timeUtil;
 
 import app.simulator.types.ServicePointType;
-import app.simulator.util.distributions.ContinuousGenerator;
-import app.simulator.util.distributions.Negexp;
 import app.simulator.util.distributions.Normal;
 import app.simulator.util.distributions.Poisson;
-
-import java.util.Random;
 
 public class RandomTime {
     private static final double PANTTI_SERVICE_TIME = 5.0;
@@ -14,13 +10,14 @@ public class RandomTime {
     private static final double SELFCHECKOUT_SERVICE_TIME = 3.0;
     private static final double CASHIER_SERVICE_TIME = 4.0;
     private static final double AVG_SHOPPING_TIME = 20.0;
-    private static double speed = 1.0;
-    private static double customerNumber = 6.0; // TODO: Connect to the UI to change the value
+
+    // customerNumber and timeIntervalsInHours are used for Poisson distribution calculation
+    private static double customerNumber = 6.0;
     private static double timeIntervalsInHours = 1.0; // 30 minutes = 0.5 hours
 
     public static double generateShoppingTime() {
         Normal normalGenerator = new Normal(AVG_SHOPPING_TIME, 10);
-        return normalGenerator.sample() * speed;
+        return normalGenerator.sample();
     }
 
     /***
@@ -55,21 +52,4 @@ public class RandomTime {
         customerNumber = (double) i;
     }
 
-    public static double getSpeed() {
-        return speed;
-    }
-
-    public static void setSpeed(double speed) {
-        if (speed == 0) {
-            RandomTime.speed = 1.9;
-        } else if (speed == 0.5) {
-            RandomTime.speed = 1.5;
-        } else if (speed == 1.0) {
-            RandomTime.speed = 1;
-        } else if (speed == 1.5) {
-            RandomTime.speed = 0.5;
-        } else if (speed == 2.0) {
-            RandomTime.speed = 0.1;
-        }
-    }
 }

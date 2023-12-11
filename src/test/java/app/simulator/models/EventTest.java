@@ -1,7 +1,5 @@
 package app.simulator.models;
 
-import app.simulator.types.EventType;
-import app.simulator.types.ServicePointType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
