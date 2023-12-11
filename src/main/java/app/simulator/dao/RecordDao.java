@@ -50,4 +50,15 @@ public class RecordDao {
             e.printStackTrace();
         }
     }
+
+    public void removeAllRecords() {
+        Connection conn = DatabaseAccessor.getConnection();
+        String sql = "DELETE FROM event";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

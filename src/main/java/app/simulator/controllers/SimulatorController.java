@@ -1,5 +1,7 @@
 package app.simulator.controllers;
 
+import app.simulator.dao.RecordDao;
+import app.simulator.entity.Record;
 import app.simulator.models.ServicePoint;
 import app.simulator.services.Engine;
 import app.simulator.util.timeUtil.RandomTime;
@@ -7,89 +9,54 @@ import app.simulator.views.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+
+import java.util.List;
+
 
 public class SimulatorController {
 
     @FXML
-    public ListView<String> list_selfcheckout;
-    // service point status
+    public TextArea queue1_status;
     @FXML
-    private ListView<String> list_queue1;
+    public TextArea pantti_status;
     @FXML
-    private ListView<String> list_pantti;
+    public TextArea market_status;
     @FXML
-    private ListView<String> list_market;
+    public TextArea queue2_status;
     @FXML
-    private ListView<String> list_queue2;
+    public TextArea selfcheckout_status;
     @FXML
-    private ListView<String> list_cashier;
-
-    // input
+    public TextArea casher_status;
     @FXML
     private TextField input_number;
-    // slider
     @FXML
     private Slider speed_slider;
-    // buttons
     @FXML
     private Button btn_play;
     @FXML
     private Button btn_stop;
 
-    private Engine simulatorEngine;
-
-    private ServicePoint[] servicePoints;
-
     private App view;
+    private Engine simulatorEngine;
+    private List<Record> records;
+    private RecordDao recordDao = new RecordDao();
 
     public void setAppReference(App view) {
         this.view = view;
     }
 
-
     /***
      * Display list of customer id waiting for returning pantti at Queue1.
      */
-    public void setQueue1() {
-        list_queue1.getItems().add("hello");
+    public void setStatue(TextArea textArea, String string) {
+        textArea.clear();
+        textArea.setText(string);
     }
 
-    /***
-     * Display one customer id at Pantti.
-     */
-    public void setPantti() {
-        list_pantti.getItems().add("hello");
-    }
-
-    /***
-     * Display list of customer id in Market
-     */
-    public void setMarket() {
-        // get customers from model and display in list
-
-    }
-
-    /***
-     * Display list of customer id at Queue2
-     */
-    public void setQueue2() {
-        // get customers from model and display in list
-    }
-
-    /***
-     * Display one customer id at self-checkout
-     */
-    public void setSelfService() {
-        // get customers from model and display in list
-    }
-
-    /***
-     * Display one customer id at casheir
-     */
-    public void setCashier() {
-        // get customers from model and display in list
-    }
 
     /***
      * Get the value and connect it to models-> Clock
@@ -112,6 +79,9 @@ public class SimulatorController {
     // play button
     public void playSimulation(ActionEvent e) throws InterruptedException {
         // get customers from model and start to display in table
+        // reset Record table in DB
+        recordDao.removeAllRecords();
+
         int customers = Integer.parseInt(input_number.getText());
         if (customers == 0 || input_number.getText().equals("")) {
             System.out.println("Please enter the number of customers");
@@ -121,13 +91,62 @@ public class SimulatorController {
 
         simulatorEngine = new Engine();
         simulatorEngine.start();
+        simulatorEngine.join();
 
-        servicePoints = simulatorEngine.getServicePoints();
-        list_queue1.getItems().addAll(servicePoints[0].getQueueString());
-        list_pantti.getItems().addAll(servicePoints[1].getQueueString());
-        list_market.getItems().addAll(servicePoints[2].getQueueString());
-        list_queue2.getItems().addAll(servicePoints[3].getQueueString());
-        list_selfcheckout.getItems().addAll(servicePoints[4].getQueueString());
-        list_cashier.getItems().addAll(servicePoints[5].getQueueString());
+        records = recordDao.getAllRecords();
+        Writer writer = new Writer(records);
+        Thread thread = new Thread(writer);
+        thread.start();
+    }
+
+    public class Writer implements Runnable {
+        private List<Record> records;
+        private TextArea textArea;
+        private String string;
+
+        public Writer(List<Record> records) {
+            this.records = records;
+            this.textArea = textArea;
+            this.string = string;
+        }
+
+        @Override
+        public void run() {
+            for (Record r : records) {
+                String servicePoint = r.getServicePoint();
+                switch (servicePoint) {
+                case "Queue1":
+                    setStatue(queue1_status, r.getCustomers());
+                    break;
+
+                case "Pantti":
+                    setStatue(pantti_status, r.getCustomers());
+                    break;
+
+                case "MARKET":
+                    setStatue(market_status, r.getCustomers());
+                    break;
+
+                case "QUEUE2":
+                    setStatue(queue2_status, r.getCustomers());
+                    break;
+
+                case "SELF_CHECKOUT":
+                    setStatue(selfcheckout_status, r.getCustomers());
+                    break;
+
+                case "CASHIER":
+                    setStatue(casher_status, r.getCustomers());
+                    break;
+
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }
