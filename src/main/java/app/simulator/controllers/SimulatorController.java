@@ -36,6 +36,10 @@ public class SimulatorController {
     private Writer writer;
     private double speedRate = 1;
 
+    public void setInitialFocus() {
+        input_number.requestFocus();
+    }
+
     public void setTextInput(TextArea textArea, String string) {
         textArea.clear();
         textArea.setText(string);
@@ -88,7 +92,7 @@ public class SimulatorController {
         writer = new Writer(records);
         writer.start();
     }
-    
+
     // Write the records to the UI
     public class Writer extends Thread {
         private List<Record> records;

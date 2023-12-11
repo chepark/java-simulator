@@ -1,5 +1,6 @@
 package app.simulator.views;
 
+import app.simulator.controllers.SimulatorController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,5 +30,8 @@ public class App extends Application {
         stage.setTitle("Supermarket simulator");
         stage.setScene(scene);
         stage.show();
+
+        SimulatorController controller = fxmlLoader.getController();
+        controller.setInitialFocus();
     }
 }
