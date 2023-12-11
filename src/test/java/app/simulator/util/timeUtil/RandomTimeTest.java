@@ -1,9 +1,15 @@
 package app.simulator.util.timeUtil;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/***
+ * Test class for RandomTime
+ * @see app.simulator.util.timeUtil.RandomTime
+ */
+
+@DisplayName("Check RandomTime class")
 class RandomTimeTest {
     private RandomTime rt;
 
@@ -17,14 +23,14 @@ class RandomTimeTest {
             assertTrue(shoppingTime >= 1 && shoppingTime <= 30);
         }
     }
-
+    
     @Test
+    @DisplayName("Test generateArrivalTimeGap method")
     public void testGenerateArrivalTime() {
         int arrivalTime;
 
-            arrivalTime = (int)  RandomTime.generateArrivalTimeGap();
-            //assertTrue(arrivalTime >= 2 && arrivalTime <= 10);
-            System.out.println(arrivalTime);
+        arrivalTime = (int) RandomTime.generateArrivalTimeGap();
+        System.out.println(arrivalTime);
         assertTrue(arrivalTime >= 0 && arrivalTime <= 10);
     }
 }

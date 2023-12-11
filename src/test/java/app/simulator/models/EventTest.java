@@ -3,8 +3,10 @@ package app.simulator.models;
 import app.simulator.types.EventType;
 import app.simulator.types.ServicePointType;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static app.simulator.types.ServicePointType.PANTTI;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EventTest {
@@ -13,16 +15,18 @@ class EventTest {
     @BeforeAll
     public static void setup() throws Exception {
         Customer c = new Customer();
-        event = new Event(10.0, ServicePointType.PANTTI);
+        event = new Event(10.0, PANTTI);
     }
 
     @Test
+    @DisplayName("Test time is set correctly")
     public void testGetTime() {
         assertEquals(10.0, event.getTime());
     }
 
     @Test
+    @DisplayName("Test ServicePointType is set correctly")
     public void testServicePointType() {
-        assertEquals(ServicePointType.PANTTI, event.getServicePoint());
+        assertEquals(PANTTI, event.getServicePoint());
     }
 }

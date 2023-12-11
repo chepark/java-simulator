@@ -2,6 +2,7 @@ package app.simulator.dao;
 
 import app.simulator.entity.WaitingTime;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @see app.simulator.dao.WaitingTimeDao
  * @see app.simulator.entity.WaitingTime
  */
+@DisplayName("Test WaitingTimeDao class")
 class WaitTimeDaoTest {
     private static WaitingTimeDao waitingTimeDao;
     @BeforeAll
@@ -22,12 +24,14 @@ class WaitTimeDaoTest {
     }
 
     @Test
+    @DisplayName("Test fetching all waiting times from database")
     public void testGetAllWaitingTimes() {
         List<WaitingTime> waitingTimeList = waitingTimeDao.getAllWaitTime();
         assertFalse(waitingTimeList.isEmpty());
     }
 
     @Test
+    @DisplayName("Test fetching waiting time by id from database")
     public void testGetWaitingTimeById() {
         WaitingTime waitingTime = waitingTimeDao.getWaitTime(1);
         assertNotNull(waitingTime);
