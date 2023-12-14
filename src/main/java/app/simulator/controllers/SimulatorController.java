@@ -148,6 +148,7 @@ public class SimulatorController {
                     throw new RuntimeException(e);
                 }
             }
+            setText(simulator_status, "Finished! Report in DB");
         }
     }
 }

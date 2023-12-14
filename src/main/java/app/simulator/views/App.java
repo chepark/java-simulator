@@ -9,14 +9,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * This application is created as a group assignment for Project Programming course in Metropolia UAS.
- *
- * @author Bijay Karki
- * @author Chaeah Park
- * @author Mamita Gurung
- * @author Vladislav Zakatov
+ * The main class of the application.
+ * It is the starting point to run the application.
  */
-
 public class App extends Application {
     public static void main(String[] args) {
         launch(args);

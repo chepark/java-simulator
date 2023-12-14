@@ -5,10 +5,26 @@ import app.simulator.types.ServicePointType;
 
 import java.util.Random;
 
+/***
+ * Event class to create events for the simulation
+ */
 public class Event implements Comparable<Event> {
 
+    /**
+     * Time of the event
+     */
     private double time;
+    /**
+     * Service point name: Queue1, Pantti, Market, Queue2, SelfCheckout, Checkout
+     *
+     * @see ServicePointType
+     */
     private ServicePointType servicePoint;
+    /**
+     * Customer type: HAS_PANTTI, HAS_NO_PANTTI
+     *
+     * @see CustomerType
+     */
     private CustomerType customerType;
 
     /***
@@ -39,6 +55,7 @@ public class Event implements Comparable<Event> {
     }
 
     /***
+     * Get time of the event
      * @return time of event
      */
     public double getTime() {
@@ -46,6 +63,7 @@ public class Event implements Comparable<Event> {
     }
 
     /***
+     * Get the service point name
      * @return service point name: Queue1, Pantti, Market, Queue2, SelfCheckout, Checkout
      */
     public ServicePointType getServicePoint() {
@@ -53,6 +71,10 @@ public class Event implements Comparable<Event> {
     }
 
 
+    /***
+     * Check if customer has pantti
+     * @return true if customer has pantti, false if customer has no pantti
+     */
     public boolean hasPantti() {
         return customerType == CustomerType.HAS_PANTTI ? true : false;
     }

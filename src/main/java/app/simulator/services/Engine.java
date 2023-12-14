@@ -20,12 +20,12 @@ public class Engine extends Thread {
         eventList = new EventList<Event>();
         servicePoints = new ServicePoint[6];
 
-        servicePoints[0] = new ServicePoint(QUEUE1, eventList); // Queue1
-        servicePoints[1] = new ServicePoint(PANTTI, eventList); // Pantti
-        servicePoints[2] = new ServicePoint(MARKET, eventList); // Market
-        servicePoints[3] = new ServicePoint(ServicePointType.QUEUE2, eventList); // Queue2
-        servicePoints[4] = new ServicePoint(ServicePointType.SELF_CHECKOUT, eventList); // SelfCheckout
-        servicePoints[5] = new ServicePoint(ServicePointType.CASHIER, eventList);  // Cashier
+        servicePoints[0] = new ServicePoint(QUEUE1); // Queue1
+        servicePoints[1] = new ServicePoint(PANTTI); // Pantti
+        servicePoints[2] = new ServicePoint(MARKET); // Market
+        servicePoints[3] = new ServicePoint(ServicePointType.QUEUE2); // Queue2
+        servicePoints[4] = new ServicePoint(ServicePointType.SELF_CHECKOUT); // SelfCheckout
+        servicePoints[5] = new ServicePoint(ServicePointType.CASHIER);  // Cashier
     }
 
     public void run() {

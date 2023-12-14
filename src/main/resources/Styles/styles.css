@@ -2,19 +2,6 @@
     -fx-background-color: #F2FFE9;
     -fx-pref-width: 1000px;}
 
-.table-view {
-    -fx-background-color: white;
-     -fx-border-color: #EDEDED;
-    -fx-border-width: 1px; }
-
-.table-view .column-header {
-    -fx-background-color: #1B4332;
-    -fx-border-color: white;
-    -fx-border-width: 1px; }
-
-.table-view .column-header .label {
-    -fx-text-fill: white; }
-
 .input_label {
     -fx-font-size: 13px;
     -fx-fill: #000000; }
