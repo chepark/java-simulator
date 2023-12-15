@@ -62,6 +62,7 @@ To run tests:
 
 ```bash
 $ ./gradlew test
+```
 
 ## Group members
 * [Bijay Karki](https://github.com/BijayKarki)
