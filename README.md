@@ -61,7 +61,7 @@ components.
 To run tests:
 
 ```bash
-$ ./gradlew test
+$ mvn test
 ```
 
 ## Group members
