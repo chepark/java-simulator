@@ -68,4 +68,4 @@ $ ./gradlew test
 * [Bijay Karki](https://github.com/BijayKarki)
 * [Chaeah Park](https://github.com/chepark)
 * [Mamita Gurung](https://github.com/Mamita123)
-* [Vladislav Zakatov]https://github.com/VlazaIT)
+* [Vladislav Zakatov](https://github.com/VlazaIT)
