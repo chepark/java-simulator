@@ -32,9 +32,9 @@ enhanced simulation accuracy.
 
 ## Features
 
--[x] Changes the Poisson distribution with user input to simulate different customer arrival rates.
--[x] Graphical representation of the supermarket environment using JavaFX.
--[x] Database integration with MySQL for data storage and retrieval
+- [x] Changes the Poisson distribution with user input to simulate different customer arrival rates.
+- [x] Graphical representation of the supermarket environment using JavaFX.
+- [x] Database integration with MySQL for data storage and retrieval
 - [x] JUnit tests
 - [x] JavaDoc documentation: files are located in the root directory of the project under the `JavaDoc` folder
 - [x] Multithreading for concurrent processing and enhanced simulation accuracy
