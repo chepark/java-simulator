@@ -1,4 +1,4 @@
-# Supermarket Simulator Project - Metropolia University OOP course
+# Supermarket Simulator Project - Metropolia University OOP course project
 
 This Supermarket Simulator is a Java-based application utilizing JavaFX for the graphical interface and MySQL for
 database management. The project employs multithreading techniques and leverages the Poisson distribution for simulating
