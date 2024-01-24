@@ -1,4 +1,4 @@
-# Supermarket Simulator Project
+# Supermarket Simulator Project - Metropolia University OOP course
 
 This Supermarket Simulator is a Java-based application utilizing JavaFX for the graphical interface and MySQL for
 database management. The project employs multithreading techniques and leverages the Poisson distribution for simulating
@@ -65,7 +65,8 @@ $ mvn test
 ```
 
 ## Group members
-* [Bijay Karki](https://github.com/BijayKarki)
-* [Chaeah Park](https://github.com/chepark)
-* [Mamita Gurung](https://github.com/Mamita123)
-* [Vladislav Zakatov](https://github.com/VlazaIT)
+
+- [Bijay Karki](https://github.com/BijayKarki)
+- [Chaeah Park](https://github.com/chepark)
+- [Mamita Gurung](https://github.com/Mamita123)
+- [Vladislav Zakatov](https://github.com/VlazaIT)
